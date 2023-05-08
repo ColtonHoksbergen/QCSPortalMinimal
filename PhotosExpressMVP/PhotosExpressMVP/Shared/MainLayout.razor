@@ -1,0 +1,77 @@
+﻿@using System.Security.Claims
+@using Blazored.Toast.Configuration
+@*@using DataAccessLibrary.Models.EntityModels*@
+@using DataAccessLibrary.Models.ViewModels
+@*@using DataAccessLibrary.RepositoryInterfaces
+@using DataAccessLibrary.ViewServices*@
+@using PhotosExpressMVP.Components
+@using System.Runtime.CompilerServices
+@using Serilog
+
+@inherits LayoutComponentBase
+
+@inject IConfiguration configuration;
+@*@inject UserViewService UserViewService;*@
+@inject NavigationManager NavigationManager;
+
+<PageTitle>QCS Portal</PageTitle>
+
+<Layout Sider>
+    <Layout>
+        <LayoutHeader Fixed>
+            <TopNav />
+        </LayoutHeader>
+        <LayoutContent Style="margin-left: 50px; margin-right: 50px;">
+            <PageTitle>QCS Portal</PageTitle>
+            @Body
+        </LayoutContent>
+    </Layout>
+</Layout>
+
+@*<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="5"
+                ShowProgressBar="true" 
+                RemoveToastsOnNavigation = "false"
+                IconType="IconType.FontAwesome"
+                SuccessClass="success-toast-override"
+                SuccessIcon="fa fa-check-circle"
+                ErrorIcon="fa fa-times-circle" 
+                InfoIcon="fa fa-book"
+                MaxToastCount="3"
+                />*@
+
+@code
+{
+    //[CascadingParameter]
+    //private Task<AuthenticationState> authState { get; set; }
+
+    //public string? RedirectURI;
+
+    //static string GetActualAsyncMethodName([CallerMemberName] string name = null) => name;
+
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    Log.Information($"MainLayout.razor_{GetActualAsyncMethodName()} Start: MainLayout.razor");
+
+    //    if (firstRender)
+    //    {
+    //        var currentUser = (await authState).User;
+
+    //        RedirectURI = "login/oidc?RedirectUri=" + configuration["HelloAuthentication:RedirectURI"];
+
+    //        if (currentUser.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+    //        {
+    //            UserViewModel user = await UserViewService.GetOrCreateUser(currentUser).ConfigureAwait(false);
+    //            Log.Information($"MainLayout.razor_{GetActualAsyncMethodName()} User located: {user.UserName}");
+
+    //            user.SignInCount += 1;
+    //            user.DateLastSignIn = DateTime.Now;
+
+    //            Log.Information($"MainLayout.razor_{GetActualAsyncMethodName()} Updating user {user.UserName}. {user.SignInCount} sign-ins, latest sign-in {user.DateLastSignIn}.");
+    //            await UserViewService.UpdateUser(user).ConfigureAwait(false);
+    //        }
+    //    }
+
+    //    Log.Information($"MainLayout.razor_{GetActualAsyncMethodName()} End: MainLayout.razor");
+    }
+}

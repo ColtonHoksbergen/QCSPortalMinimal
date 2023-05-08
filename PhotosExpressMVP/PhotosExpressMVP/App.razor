@@ -1,0 +1,71 @@
+﻿<Blazorise.ThemeProvider Theme="@theme">
+    <CascadingAuthenticationState>
+        <Router AppAssembly="@typeof(App).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" >
+                    @*<NotAuthorized>
+                        <Row TextAlignment="TextAlignment.Center" Style="margin-top: 10%">
+                            <h1 class="header">Hold up chief, you're not authorized to be here.</h1>
+                        </Row>
+                    </NotAuthorized>*@
+                </RouteView>
+                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            </Found>
+            <NotFound>
+                <PageTitle>Not found</PageTitle>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p role="alert">Sorry, there's nothing at this address.</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </CascadingAuthenticationState>
+</Blazorise.ThemeProvider>
+
+@code {
+    static String Primary = "#152235";
+    static String Secondary = "#1B96D5";
+    static String PrimaryLight = "#F0F4F9";
+    static String Info = "#35979C";
+    static String Warning = "#DBF0FB";
+    static String Success = "#4D8B31";
+    static String Danger = "#C05746";
+
+    private Blazorise.Theme theme = new Blazorise.Theme
+    {
+        ColorOptions = new()    
+        {
+            Primary = Primary,
+            Secondary = Secondary,
+            Info = Info,
+            Warning = PrimaryLight,
+            Success = Success,
+            Danger = Danger
+        },
+        BarOptions = new()
+        {
+            VerticalWidth = "300px",
+            DarkColors = new() {
+                BackgroundColor = Primary,
+                ItemColorOptions = new(){
+                    ActiveBackgroundColor = Secondary,
+                    ActiveColor = Primary
+                },
+                DropdownColorOptions = new() {
+                    BackgroundColor = Primary
+                },
+                Color = "#FFFFFF"
+            },
+        },
+        SpinKitOptions = new() {
+            Color = PrimaryLight,
+            Size = "100px"
+        },
+        InputOptions = new() {
+            CheckColor = Primary,
+        },
+        DividerOptions = new() {
+            Color = Primary,
+            TextSize = "16px"
+        }
+    };
+}

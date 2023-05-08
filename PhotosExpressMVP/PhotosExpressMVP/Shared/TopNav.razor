@@ -1,0 +1,175 @@
+﻿@*@using DataAccessLibrary.Enums*@
+@*@using DataAccessLibrary.Models.EntityModels*@
+@using DataAccessLibrary.Models.ViewModels
+@*@using DataAccessLibrary.ViewServices*@
+@using System.Security.Claims
+@using PhotosExpressMVP.Components
+
+@inject NavigationManager NavigationManager
+@*@inject UserViewService UserViewService;*@
+
+<nav class="navbar navbar-expand-lg custom-nav-theme">
+    <img src="/staticfiles//Logo.png" width="45" height="45" class="d-inline-block align-top" alt="" style="margin-right: 10px; border-radius: 50%;">
+    <a class="navbar-brand" href="/Home">QCS Portal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <Icon Name="IconName.Bars" TextColor="TextColor.White"/>
+    </button>
+    <div class="collapse navbar-collapse custom-nav" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="PhotosExpress/PhotosExpressDetail">Details</a>
+            </li>
+            @if (UserHasProgramCodes)
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link override-nav-link dropdown-toggle" href="#" id="navPhotosExpressDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Photos Express
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navPhotosExpressDropdown">
+                        <a class="dropdown-item" href="PhotosExpress/CreatePhotosExpress">Create New</a>
+                        <a class="dropdown-item" href="PhotosExpress/CreatePhotosExpressFromPhotos">New From Photos</a>
+                        <a class="dropdown-item" href="PhotosExpress/PhotosExpressDashboard">Dashboard</a>
+                        <a class="dropdown-item" href="PhotosExpress/PhotosExpressSearch">Search</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link override-nav-link dropdown-toggle" href="#" id="navDeskReviewDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Desk Review
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navDeskReviewDropdown">
+                        <a class="dropdown-item" href="DeskReview/CreateDeskReview">Create New</a>
+                        <a class="dropdown-item" href="DeskReview/DeskReviewDashboard">Dashboard</a>
+                        <a class="dropdown-item" href="DeskReview/DeskReviewSearch">Search</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link override-nav-link dropdown-toggle" href="#" id="navDispatchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dispatch
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navDispatchDropdown">
+                        <a class="dropdown-item" href="Dispatch/CreateDispatch">Create New</a>
+                        <a class="dropdown-item" href="Dispatch/DispatchDashboard">Dashboard</a>
+                        <a class="dropdown-item" href="Dispatch/DispatchSearch">Search</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link override-nav-link dropdown-toggle" href="#" id="navFirstNoticeOfLossDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        First Notice Of Loss
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navFirstNoticeOfLossDropdown">
+                        <a class="dropdown-item" href="FirstNoticeOfLoss/CreateFirstNoticeOfLoss">Create New</a>
+                        <a class="dropdown-item" href="FirstNoticeOfLoss/FirstNoticeOfLossDashboard">Dashboard</a>
+                        <a class="dropdown-item" href="FirstNoticeOfLoss/FirstNoticeOfLossSearch">Search</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link override-nav-link dropdown-toggle" href="#" id="navTotalLossDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Total Loss
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navDropdnavTotalLossDropdownown">
+                        <a class="dropdown-item" href="TotalLoss/CreateTotalLoss">Create New</a>
+                        <a class="dropdown-item" href="TotalLoss/TotalLossDashboard">Dashboard</a>
+                        <a class="dropdown-item" href="TotalLoss/TotalLossSearch">Search</a>
+                    </div>
+                </li>
+            }
+            @if(UserIsAdmin)
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link override-nav-link dropdown-toggle" href="#" id="navAdminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Administration
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navAdminDropdown">
+                        <a class="dropdown-item" href="Admin/CompanyDashboard">Company Management</a>
+                        <a class="dropdown-item" href="Admin/UserSearch">User Management</a>
+                        <a class="dropdown-item" href="Admin/Reporting">Statistics</a>
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <Div class="text-right" Style="padding: 10px;">
+            <AuthorizeView>
+                <Authorized>
+                    @if (@context.User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+                    {
+                        <span style="margin-right: 10px;">
+                            @if (UserIsAdmin)
+                            {
+                                <Icon Name="IconName.UserPlus" Style="margin-right: 5px;" />
+                            }
+                            else
+                            {
+                                <Icon Name="IconName.UserCheck" Style="margin-right: 5px;" />
+                            }
+                            @context.User.Claims.Where(x => x.Type.Equals("name")).FirstOrDefault().Value 
+                        </span>
+                    }
+                    <a class="btn btn-warning" style="width:100px" href="login/logout">Logout</a>
+                </Authorized>
+            </AuthorizeView>
+            @*<LiveChat />*@
+        </Div>
+    </div>
+</nav>
+
+<style>
+    .custom-nav {
+        justify-content: space-between;
+    }
+
+    .custom-nav-theme {
+        background-color: var(--branded-primary-color) !important;
+        background: linear-gradient(to right, var(--branded-secondary-color), var(--branded-primary-color));
+        color: white !important;
+        /*box-shadow: inset 0 -20px 15px -20px white;*/
+    }
+
+    .override-nav-link {
+        color: white;
+    }
+
+    .override-nav-link:hover {
+        color: var(--branded-primary-color);
+        background-color: var(--branded-light-primary-color);
+    }
+
+    .override-nav-link:focus {
+        color: var(--branded-primary-color);
+        background-color: var(--branded-light-primary-color);
+    }
+
+    .navbar-brand {
+        color: white;
+    }
+
+    .navbar-brand:hover {
+        color: var(--branded-primary-color);
+    }
+</style>
+
+@code {
+    //[CascadingParameter]
+    //private Task<AuthenticationState> authState { get; set; }
+
+    bool UserHasProgramCodes;
+    bool UserIsAdmin;
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    var currentUser = (await authState.ConfigureAwait(false)).User;
+
+    //    if (currentUser.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+    //    {
+    //        UserViewModel userViewModel = await UserViewService.GetOrCreateUser(currentUser).ConfigureAwait(false);
+
+    //        if (userViewModel.ProgramCodeModels.Count > 0)
+    //        {
+    //            UserHasProgramCodes = true;
+    //        }
+
+    //        // Check if user is admin by referencing the CompanyUserPrivilege table
+    //        UserIsAdmin = await UserViewService.IsUserAdmin(userViewModel).ConfigureAwait(false);
+    //    }
+    //}
+}

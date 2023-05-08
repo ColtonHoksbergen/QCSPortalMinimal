@@ -1,0 +1,11 @@
+﻿@page "/"
+@namespace PhotosExpressMVP.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<script src="_framework/blazor.server.js"></script>
+
+@{
+    Layout = "_Layout";
+}
+
+<component type="typeof(App)" render-mode="ServerPrerendered" />

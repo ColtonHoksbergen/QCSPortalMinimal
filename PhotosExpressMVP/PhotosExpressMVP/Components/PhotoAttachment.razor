@@ -1,0 +1,26 @@
+﻿@using DataAccessLibrary.Models.ViewModels;
+
+<img src="@ImageFileList[PhotoIndex].Base64Data" style="height: 100%"  title="@ImageFileList[PhotoIndex].FileName" />
+
+<style>
+</style>
+
+@code {
+    [Parameter]
+    public bool AllowDeletion { get; set; }
+
+    [Parameter]
+    public Guid UniqueFolderName { get; set; }
+
+    [Parameter]
+    public string? FolderNamePrefix { get; set; }
+
+    [Parameter]
+    public List<FileViewModel> ImageFileList { get; set; }
+
+    [Parameter]
+    public int PhotoIndex { get; set; }
+
+    [Parameter]
+    public string PhotoName { get; set; }
+}
